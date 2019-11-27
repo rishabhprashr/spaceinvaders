@@ -37,11 +37,17 @@ enemyY_change = []
 num_enemies = 6
 
 for i in range(num_enemies):
-    enemyImg.append(pygame.image.load('enemy.png'))
+
     enemyX.append(random.randint(0, 736))
     enemyY.append(random.randint(64, 180))
     enemyX_change.append(2)
     enemyY_change.append(40)
+
+for i in range(2):
+    x = random.randint(0, 2)
+    enemyImg.append(pygame.image.load('enemy.png'))
+    enemyImg.append(pygame.image.load('enemy2.png'))
+    enemyImg.append(pygame.image.load('enemy3.png'))
 
 # bullet
 bulletImg = pygame.image.load('bullet.png')
@@ -55,6 +61,14 @@ bullet_state = "ready"
 explosionImg = pygame.image.load("explosion.png")
 
 font2 = pygame.font.Font('freesansbold.ttf', 80)
+
+
+def explosion(img):
+    exp = img
+    img = explosionImg
+    screen.blit(img, (enemyX[i], enemyY[i]))
+    pygame.time.delay(100)
+    img = exp
 
 
 def game_over():
@@ -151,7 +165,7 @@ while running:
             bulletY = playerY
             bullet_state = "ready"
             score_value += 1
-            # screen.blit(explosionImg, (enemyX, enemyY))
+            explosion(enemyImg[i])
             enemyX[i] = random.randint(0, 736)
             enemyY[i] = random.randint(64, 130)
         enemy(enemyX[i], enemyY[i], i)
@@ -160,6 +174,7 @@ while running:
             for j in range(num_enemies):
                 enemyY[j] = 2000
             game_over()
+            playerImg = explosionImg
             break
 
     if (bulletY <= 36):
